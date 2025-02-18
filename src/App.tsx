@@ -46,7 +46,7 @@ export function App() {
 				{/* slider */}
 				<div className={cn("flex gap-2", numbers ? "pl-8" : "pl-2")}>
 					{/* dividers */}
-					<div className="flex flex-col items-end justify-between space-y-1">
+					<div className="flex flex-col items-end justify-between">
 						{values
 							.map((value, index) => (
 								<div
@@ -75,7 +75,7 @@ export function App() {
 					</div>
 
 					{/* selected range */}
-					<div className="flex flex-col justify-between space-y-1">
+					<div className="flex flex-col justify-between">
 						{values
 							.map((value, index) => (
 								<div
