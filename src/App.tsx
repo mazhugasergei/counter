@@ -3,7 +3,6 @@ import { cn } from "./utils/helpers"
 
 export function App() {
 	const containerRef = React.useRef<HTMLDivElement>(null)
-	const [containerHeight, setContainerHeight] = React.useState<number | null>(null)
 	const [selectedValueIndex, setSelectedValueIndex] = React.useState(0)
 	const minValue = 0
 	const maxValue = 100
@@ -24,7 +23,6 @@ export function App() {
 
 	React.useEffect(() => {
 		if (!containerRef.current) return
-		setContainerHeight(containerRef.current.clientHeight)
 
 		const handleChangeValue = (e: WheelEvent) => {
 			setSelectedValueIndex((prev) => {
