@@ -4,7 +4,8 @@
 	--color-background: hsl(0 0 2);
 	--color-foreground: hsl(0 0 95);
 	--color-primary: hsl(0 72 41);
-	--color-secondary: hsl(0 0 5);
+	--color-secondary: hsl(0 0 30);
+	--color-muted: hsl(0 0 5);
 	--color-border: hsl(0 0 10);
 }
 

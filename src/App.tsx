@@ -98,7 +98,10 @@ export function App() {
 					</div>
 				</div>
 
-				<div className="self-end font-mono text-7xl">{values[selectedValueIndex]}</div>
+				<div className="flex flex-col items-end gap-2 self-end">
+					<div className="text-secondary text-md font-mono">Value</div>
+					<div className="font-mono text-7xl">{values[selectedValueIndex]}</div>
+				</div>
 			</div>
 
 			{/* debug */}
@@ -111,7 +114,7 @@ export function App() {
 
 const Block = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
 	({ children, className, ...props }, ref) => (
-		<div ref={ref} className={cn("bg-secondary rounded-sm border p-4", className)} {...props}>
+		<div ref={ref} className={cn("bg-muted rounded-sm border p-4", className)} {...props}>
 			{children}
 		</div>
 	)
