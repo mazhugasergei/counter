@@ -103,6 +103,7 @@ export function App() {
 										width: "3px",
 										borderTop: "1px solid var(--color-foreground)",
 										opacity: selectedValueIndex >= index ? 1 : 0.2,
+										// borderTop: `1px solid ${selectedValueIndex >= index ? "var(--color-primary)" : "var(--color-secondary)"}`,
 										transform: (() => {
 											const x = Math.abs(selectedValueIndex - index)
 											const y = Math.exp(-(x ** 2 / (2 * sigma ** 2)))
