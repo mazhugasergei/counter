@@ -40,12 +40,13 @@ export function App() {
 	}, [containerRef])
 
 	return (
-		<main className="p-2">
+		<main>
 			{/* container */}
-			<Block ref={containerRef}>
-				<div className={cn("flex gap-2", numbers ? "pl-10" : "pl-2")}>
+			<div ref={containerRef} className="flex min-h-screen justify-between p-6">
+				{/* slider */}
+				<div className={cn("flex gap-2", numbers ? "pl-8" : "pl-2")}>
 					{/* dividers */}
-					<div className="flex flex-col items-end space-y-1">
+					<div className="flex flex-col items-end justify-between space-y-1">
 						{values
 							.map((value, index) => (
 								<div
@@ -64,7 +65,7 @@ export function App() {
 								>
 									{/* numbers */}
 									{numbers && (
-										<div className="absolute top-0 right-[100%] -translate-x-2 -translate-y-1/2 text-xs">
+										<div className="absolute top-0 right-[100%] -translate-x-2 -translate-y-1/2 font-mono text-xs">
 											{!(index % majorDivision) ? value : ""}
 										</div>
 									)}
@@ -73,8 +74,8 @@ export function App() {
 							.reverse()}
 					</div>
 
-					{/* selected index */}
-					<div className="flex flex-col space-y-1">
+					{/* selected range */}
+					<div className="flex flex-col justify-between space-y-1">
 						{values
 							.map((value, index) => (
 								<div
@@ -96,12 +97,14 @@ export function App() {
 							.reverse()}
 					</div>
 				</div>
-			</Block>
+
+				<div className="self-end font-mono text-7xl">{values[selectedValueIndex]}</div>
+			</div>
 
 			{/* debug */}
-			<Block className="mt-2">
+			{/* <Block className="mt-2">
 				<pre>{JSON.stringify({ containerHeight, selectedValueIndex, radius }, null, 2)}</pre>
-			</Block>
+			</Block> */}
 		</main>
 	)
 }
