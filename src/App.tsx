@@ -10,6 +10,7 @@ export function App() {
 	const step = 1
 	const majorDivision = 5
 	const radius = 10
+	const numbers = true
 
 	if (maxValue <= minValue) return <Block>Max value must be greater than min value</Block>
 	if (!step) return <Block>Step must be defined and greater than 0</Block>
@@ -41,8 +42,8 @@ export function App() {
 	return (
 		<main className="p-2">
 			{/* container */}
-			<div ref={containerRef} className="bg-secondary">
-				<div className="flex gap-2 pl-10">
+			<Block ref={containerRef}>
+				<div className={cn("flex gap-2", numbers ? "pl-10" : "pl-2")}>
 					{/* dividers */}
 					<div className="flex flex-col items-end space-y-1">
 						{values
@@ -62,9 +63,11 @@ export function App() {
 									}}
 								>
 									{/* numbers */}
-									<div className="absolute top-0 right-[100%] -translate-x-2 -translate-y-1/2 text-xs">
-										{!(index % majorDivision) ? value : ""}
-									</div>
+									{numbers && (
+										<div className="absolute top-0 right-[100%] -translate-x-2 -translate-y-1/2 text-xs">
+											{!(index % majorDivision) ? value : ""}
+										</div>
+									)}
 								</div>
 							))
 							.reverse()}
@@ -79,7 +82,7 @@ export function App() {
 									style={{
 										width: "3px",
 										borderTop: "1px solid var(--color-foreground)",
-										opacity: selectedValueIndex >= index ? 1 : 0.3,
+										opacity: selectedValueIndex >= index ? 1 : 0.2,
 										transform: (() => {
 											const sigma = radius / 2
 											const x = Math.abs(selectedValueIndex - index)
@@ -93,7 +96,7 @@ export function App() {
 							.reverse()}
 					</div>
 				</div>
-			</div>
+			</Block>
 
 			{/* debug */}
 			<Block className="mt-2">
