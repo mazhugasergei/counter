@@ -1,35 +1,16 @@
 import React from "react"
+import { useSelector } from "react-redux"
+import { RootState } from "../store"
 import { cn } from "../utils/helpers"
+import { getGaussianOffset } from "../utils/math"
 
-interface DividersProps extends React.HTMLAttributes<HTMLDivElement> {
-	values: number[]
-	selectedIndex: number
-	isMouseDown: boolean
-	isTouchStart: boolean
-	getGaussianOffset: (selectedIndex: number, index: number) => number
-	majorDivision: number
-	numberedDivision: number
-	numbers: boolean
-	numbersOffset: number
-}
+interface DividersProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export const Dividers = React.forwardRef<HTMLDivElement, DividersProps>(
-	(
-		{
-			values,
-			selectedIndex,
-			isMouseDown,
-			isTouchStart,
-			getGaussianOffset,
-			majorDivision,
-			numberedDivision,
-			numbers,
-			numbersOffset,
-			className,
-			...props
-		},
-		ref
-	) => (
+export const Dividers = React.forwardRef<HTMLDivElement, DividersProps>(({ className, ...props }, ref) => {
+	const CONFIG = useSelector((state: RootState) => state.config)
+	const { values, selectedIndex, isMouseDown, isTouchStart } = useSelector((state: RootState) => state.app)
+
+	return (
 		<div ref={ref} className={cn("flex flex-col items-end justify-between", className)} {...props}>
 			{values
 				.map((value, index) => (
@@ -37,18 +18,18 @@ export const Dividers = React.forwardRef<HTMLDivElement, DividersProps>(
 						key={value}
 						className="relative border-t"
 						style={{
-							width: !(index % majorDivision) ? "10px" : "7px",
+							width: !(index % CONFIG.majorDivision) ? "10px" : "7px",
 							borderColor: "var(--color-foreground)",
 							right: isMouseDown || isTouchStart ? getGaussianOffset(selectedIndex, index) : 0,
 						}}
 					>
 						{/* numbers */}
-						{numbers && (
+						{CONFIG.numbers && (
 							<div
 								className="absolute top-0 right-full -translate-y-1/2 font-mono text-xs"
-								style={{ transform: `translateX(-${numbersOffset}rem)` }}
+								style={{ transform: `translateX(-${CONFIG.numbersOffset}rem)` }}
 							>
-								{!(index % numberedDivision) ? value : ""}
+								{!(index % CONFIG.numberedDivision) ? value : ""}
 							</div>
 						)}
 					</div>
@@ -56,5 +37,5 @@ export const Dividers = React.forwardRef<HTMLDivElement, DividersProps>(
 				.reverse()}
 		</div>
 	)
-)
+})
 Dividers.displayName = "Dividers"

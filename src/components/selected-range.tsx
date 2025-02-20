@@ -1,17 +1,16 @@
 import React from "react"
+import { useSelector } from "react-redux"
+import { RootState } from "../store"
 import { cn } from "../utils/helpers"
+import { getGaussianOffset } from "../utils/math"
 
-interface SelectedRangeProps extends React.HTMLAttributes<HTMLDivElement> {
-	values: number[]
-	selectedIndex: number
-	isMouseDown: boolean
-	isTouchStart: boolean
-	monochrome: boolean
-	getGaussianOffset: (selectedIndex: number, index: number) => number
-}
+interface SelectedRangeProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export const SelectedRange = React.forwardRef<HTMLDivElement, SelectedRangeProps>(
-	({ values, selectedIndex, isMouseDown, isTouchStart, monochrome, getGaussianOffset, className, ...props }, ref) => (
+export const SelectedRange = React.forwardRef<HTMLDivElement, SelectedRangeProps>(({ className, ...props }, ref) => {
+	const CONFIG = useSelector((state: RootState) => state.config)
+	const { values, selectedIndex, isMouseDown, isTouchStart } = useSelector((state: RootState) => state.app)
+
+	return (
 		<div ref={ref} className={cn("flex flex-col justify-between", className)} {...props}>
 			{values
 				.map((value, index) => (
@@ -22,7 +21,7 @@ export const SelectedRange = React.forwardRef<HTMLDivElement, SelectedRangeProps
 							borderColor:
 								index > selectedIndex
 									? "var(--color-secondary)"
-									: monochrome
+									: CONFIG.monochrome
 										? "var(--color-foreground)"
 										: "var(--color-primary)",
 							right: isMouseDown || isTouchStart ? getGaussianOffset(selectedIndex, index) : 0,
@@ -32,5 +31,5 @@ export const SelectedRange = React.forwardRef<HTMLDivElement, SelectedRangeProps
 				.reverse()}
 		</div>
 	)
-)
+})
 SelectedRange.displayName = "SelectedRange"
