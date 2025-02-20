@@ -12,23 +12,19 @@ export function App() {
 	const [isTouchStart, setIsTouchStart] = React.useState(false)
 
 	// config
-	const config = {
-		debug: false,
-		monochrome: true,
-		numbers: true,
-		numbersOffset: 0.5,
-		minValue: 0,
-		maxValue: 120,
-		step: 1,
-		majorDivision: 5,
-		numberedDivision: 10,
-	}
-	const { debug, monochrome, numbers, numbersOffset, minValue, maxValue, step, majorDivision, numberedDivision } =
-		config
+	const debug = true
+	const monochrome = true
+	const numbers = true
+	const numbersOffset = 0.5
+	const minValue = 0
+	const maxValue = 120
+	const step = 1
+	const majorDivision = 5
+	const numberedDivision = 10
 
 	// gaussian curve
 	const getOffset = (selectedIndex: number, index: number) => {
-		const maxOffset = 25
+		const maxOffset = 23
 		const sigma = 5
 		const x = Math.abs(selectedIndex - index)
 		const y = Math.exp(-(x ** 2 / (2 * sigma ** 2)))
@@ -204,7 +200,6 @@ export function App() {
 						<pre>
 							{JSON.stringify(
 								{
-									...config,
 									sliderHeight,
 									isMouseDown,
 									isTouchStart,
