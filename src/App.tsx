@@ -133,9 +133,8 @@ export function App() {
 				ref={sliderRef}
 				className="flex gap-3"
 				style={{
-					paddingLeft: numbers
-						? `${maxValue.toString().length * 0.4125 + numbersOffset + getOffset(0, 0) / 16}rem`
-						: "0.5rem",
+					paddingLeft:
+						getOffset(0, 0) / 16 + (numbers ? maxValue.toString().length * 0.4125 + numbersOffset : 0) + "rem",
 				}}
 			>
 				{/* dividers */}
