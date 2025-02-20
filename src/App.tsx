@@ -13,15 +13,17 @@ export function App() {
 	const [isTouchStart, setIsTouchStart] = React.useState(false)
 
 	// config
-	const debug = true
-	const monochrome = true
-	const numbers = true
-	const numbersOffset = 0.5
-	const minValue = 0
-	const maxValue = 120
-	const step = 1
-	const majorDivision = 5
-	const numberedDivision = 10
+	const CONFIG = {
+		debug: true,
+		monochrome: true,
+		numbers: true,
+		numbersOffset: 0.5,
+		minValue: 0,
+		maxValue: 120,
+		step: 1,
+		majorDivision: 5,
+		numberedDivision: 10,
+	}
 
 	// gaussian curve
 	const getOffset = (selectedIndex: number, index: number) => {
@@ -33,16 +35,18 @@ export function App() {
 	}
 
 	// validations
-	if (maxValue <= minValue) return <Block>Max value must be greater than min value</Block>
-	if (!step) return <Block>Step must be defined and greater than 0</Block>
-	if ((maxValue - minValue) % step) return <Block>Step must divide the range</Block>
-	if ((maxValue - minValue) % majorDivision) return <Block>Major division must divide the range</Block>
-	if ((maxValue - minValue) % numberedDivision) return <Block>Numbered division must divide the range</Block>
+	if (CONFIG.maxValue <= CONFIG.minValue) return <Block>Max value must be greater than min value</Block>
+	if (!CONFIG.step) return <Block>CONFIG.Step must be defined and greater than 0</Block>
+	if ((CONFIG.maxValue - CONFIG.minValue) % CONFIG.step) return <Block>Step must divide the range</Block>
+	if ((CONFIG.maxValue - CONFIG.minValue) % CONFIG.majorDivision)
+		return <Block>Major division must divide the range</Block>
+	if ((CONFIG.maxValue - CONFIG.minValue) % CONFIG.numberedDivision)
+		return <Block>Numbered division must divide the range</Block>
 
 	const values = React.useMemo(() => {
-		const length = (maxValue - minValue) / step + 1
-		return Array.from({ length }, (_, i) => minValue + i * step)
-	}, [minValue, maxValue, step])
+		const length = (CONFIG.maxValue - CONFIG.minValue) / CONFIG.step + 1
+		return Array.from({ length }, (_, i) => CONFIG.minValue + i * CONFIG.step)
+	}, [CONFIG.minValue, CONFIG.maxValue, CONFIG.step])
 
 	// slider height
 	React.useEffect(() => {
@@ -90,7 +94,7 @@ export function App() {
 		const calculateNewIndex = (clientY: number) => {
 			if (!sliderRef.current || !sliderHeight) return
 			const offsetFromBottom = sliderRef.current.getBoundingClientRect().bottom - clientY
-			let newIndex = Math.round((offsetFromBottom / sliderHeight) * ((maxValue - minValue) / step))
+			let newIndex = Math.round((offsetFromBottom / sliderHeight) * ((CONFIG.maxValue - CONFIG.minValue) / CONFIG.step))
 			if (newIndex < 0) newIndex = 0
 			if (newIndex > values.length - 1) newIndex = values.length - 1
 			setSelectedIndex(newIndex)
@@ -121,7 +125,17 @@ export function App() {
 			document.removeEventListener("mousemove", handleMouseMove)
 			document.removeEventListener("touchmove", handleTouchMove)
 		}
-	}, [containerRef, isMouseDown, isTouchStart, sliderRef, sliderHeight, values.length, minValue, maxValue, step])
+	}, [
+		containerRef,
+		isMouseDown,
+		isTouchStart,
+		sliderRef,
+		sliderHeight,
+		values.length,
+		CONFIG.minValue,
+		CONFIG.maxValue,
+		CONFIG.step,
+	])
 
 	return (
 		<Container ref={containerRef}>
@@ -129,9 +143,9 @@ export function App() {
 				ref={sliderRef}
 				getOffset={getOffset}
 				selectedIndex={selectedIndex}
-				numbers={numbers}
-				numbersOffset={numbersOffset}
-				maxValue={maxValue}
+				numbers={CONFIG.numbers}
+				numbersOffset={CONFIG.numbersOffset}
+				maxValue={CONFIG.maxValue}
 			>
 				<Dividers
 					values={values}
@@ -139,10 +153,10 @@ export function App() {
 					isMouseDown={isMouseDown}
 					isTouchStart={isTouchStart}
 					getOffset={getOffset}
-					majorDivision={majorDivision}
-					numberedDivision={numberedDivision}
-					numbers={numbers}
-					numbersOffset={numbersOffset}
+					majorDivision={CONFIG.majorDivision}
+					numberedDivision={CONFIG.numberedDivision}
+					numbers={CONFIG.numbers}
+					numbersOffset={CONFIG.numbersOffset}
 				/>
 
 				<SelectedRange
@@ -150,7 +164,7 @@ export function App() {
 					selectedIndex={selectedIndex}
 					isMouseDown={isMouseDown}
 					isTouchStart={isTouchStart}
-					monochrome={monochrome}
+					monochrome={CONFIG.monochrome}
 					getOffset={getOffset}
 				/>
 
@@ -159,7 +173,7 @@ export function App() {
 
 			<Display>
 				<Debug
-					debug={debug}
+					debug={CONFIG.debug}
 					sliderHeight={sliderHeight}
 					isMouseDown={isMouseDown}
 					isTouchStart={isTouchStart}
