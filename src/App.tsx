@@ -86,17 +86,7 @@ export function App() {
 			document.removeEventListener("mousemove", handleMouseMove)
 			document.removeEventListener("touchmove", handleTouchMove)
 		}
-	}, [
-		containerRef,
-		isMouseDown,
-		isTouchStart,
-		sliderRef,
-		sliderHeight,
-		values.length,
-		CONFIG.minValue,
-		CONFIG.maxValue,
-		CONFIG.step,
-	])
+	}, [containerRef, sliderRef, sliderHeight, isMouseDown, isTouchStart, CONFIG.minValue, CONFIG.maxValue, CONFIG.step])
 
 	return (
 		<Container ref={containerRef}>
