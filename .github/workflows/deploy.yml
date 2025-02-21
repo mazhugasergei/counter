@@ -1,0 +1,53 @@
+name: Deploy to GitHub Pages
+
+# Trigger the workflow on push to the main branch or manually via workflow_dispatch
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+# Set permissions for the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping queued runs but not canceling in-progress ones
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the repository code
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Set up Node.js environment
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18 # Adjust to your preferred Node.js version
+          cache: "npm" # Cache npm dependencies for faster runs
+
+      # Install dependencies
+      - name: Install Dependencies
+        run: npm install
+
+      # Build the project (matches your "build" script)
+      - name: Build
+        run: npm run build
+
+      # Upload the build artifacts (dist folder) for deployment
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist # Default Vite output directory
+
+      # Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
