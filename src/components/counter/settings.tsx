@@ -3,7 +3,7 @@ import { setConfig } from "@/store/config.slice"
 import React from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { SettingsIcon } from "../icons"
-import { Menu, MenuItem } from "../menu"
+import { Menu, MenuItem, MenuList, MenuTrigger } from "../menu"
 
 interface SettingsProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -17,8 +17,13 @@ export const Settings = React.forwardRef<HTMLDivElement, SettingsProps>((props, 
 
 	return (
 		<div ref={ref} {...props}>
-			<Menu openIcon={<SettingsIcon size={20} />} closeIcon={<SettingsIcon size={20} />}>
-				<MenuItem onClick={handleToggleDebug}>Debug menu [{CONFIG.debug ? "ON" : "OFF"}]</MenuItem>
+			<Menu>
+				<MenuTrigger>
+					<SettingsIcon size={20} />
+				</MenuTrigger>
+				<MenuList>
+					<MenuItem onClick={handleToggleDebug}>Debug menu [{CONFIG.debug ? "ON" : "OFF"}]</MenuItem>
+				</MenuList>
 			</Menu>
 		</div>
 	)
