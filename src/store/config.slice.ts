@@ -13,7 +13,7 @@ interface Config {
 }
 
 const initialState: Config = {
-	debug: true,
+	debug: process.env.NODE_ENV === "development" ? true : false,
 	monochrome: true,
 	numbers: true,
 	numbersOffset: 0.5,
