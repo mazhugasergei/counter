@@ -1,7 +1,7 @@
 import React from "react"
 import { useSelector } from "react-redux"
-import { RootState } from "../store"
-import { cn } from "../utils/helpers"
+import { RootState } from "../../store"
+import { cn } from "../../utils/helpers"
 
 interface ValuesProps extends React.HTMLAttributes<HTMLDivElement> {}
 

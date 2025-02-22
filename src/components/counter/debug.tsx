@@ -1,8 +1,8 @@
 import React, { ComponentProps } from "react"
 import { useSelector } from "react-redux"
-import { RootState } from "../store"
-import { cn } from "../utils/helpers"
-import { Block } from "./block"
+import { RootState } from "../../store"
+import { cn } from "../../utils/helpers"
+import { Block } from "../block"
 
 interface DebugProps extends ComponentProps<typeof Block> {}
 

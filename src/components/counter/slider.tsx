@@ -1,9 +1,9 @@
 import React from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { RootState } from "../store"
-import { setSliderHeight, setValues } from "../store/app.slice"
-import { cn } from "../utils/helpers"
-import { getGaussianOffset } from "../utils/math"
+import { RootState } from "../../store"
+import { setSliderHeight, setValues } from "../../store/app.slice"
+import { cn } from "../../utils/helpers"
+import { getGaussianOffset } from "../../utils/math"
 
 interface SliderProps extends React.HTMLAttributes<HTMLDivElement> {}
 
