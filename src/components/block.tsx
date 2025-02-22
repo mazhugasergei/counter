@@ -1,5 +1,5 @@
+import { cn } from "@/utils/helpers"
 import React from "react"
-import { cn } from "../utils/helpers"
 
 interface BlockProps extends React.HTMLAttributes<HTMLDivElement> {}
 
