@@ -6,6 +6,8 @@
 	--color-primary: hsl(0 72 41);
 	--color-secondary: hsl(0 0 30);
 	--color-muted: hsl(0 0 5);
+	--color-accent: hsl(0 0 9);
+	--color-destructive: hsl(0 72 41);
 	--color-border: hsl(0 0 10);
 }
 
