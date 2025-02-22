@@ -27,8 +27,18 @@ const initialState: Config = {
 const slice = createSlice({
 	name: "config",
 	initialState,
-	reducers: {},
+	reducers: {
+		setConfig: (state, action) => {
+			Object.assign(
+				state,
+				Object.keys(initialState).reduce((acc: Partial<Config>, key) => {
+					if (key in action.payload) acc[key as keyof Config] = action.payload[key]
+					return acc
+				}, {})
+			)
+		},
+	},
 })
 
-export const {} = slice.actions
+export const { setConfig } = slice.actions
 export const config = slice.reducer

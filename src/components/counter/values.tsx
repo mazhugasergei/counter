@@ -9,7 +9,7 @@ export const Values = React.forwardRef<HTMLDivElement, ValuesProps>(({ className
 	const { values, selectedIndex } = useSelector((state: RootState) => state.app)
 
 	return (
-		<div ref={ref} className={cn("text-right font-mono", className)} {...props}>
+		<div ref={ref} className={cn("font-mono", className)} {...props}>
 			<div className="text-secondary text-md">Value</div>
 			<div className="text-7xl">{values[selectedIndex]}</div>
 		</div>

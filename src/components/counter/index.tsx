@@ -5,18 +5,15 @@ import { cn } from "@/utils/helpers"
 import React from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Controls } from "./controls"
-import { Debug } from "./debug"
 import { Dividers } from "./dividers"
 import { Handler } from "./handler"
 import { SelectedRange } from "./selected-range"
 import { Slider } from "./slider"
-import { Values } from "./values"
 
 interface CounterProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export const Counter = React.forwardRef<HTMLDivElement, CounterProps>(({ className, ...props }, ref) => {
-	const counterRef = React.useRef<HTMLDivElement | null>(null)
-	React.useImperativeHandle(ref, () => counterRef.current!)
+	const triggerRef = React.useRef<HTMLDivElement>(null)
 	const sliderRef = React.useRef<HTMLDivElement>(null)
 	const handlerRef = React.useRef<HTMLDivElement>(null)
 	const dispatch = useDispatch<AppDispatch>()
@@ -34,7 +31,7 @@ export const Counter = React.forwardRef<HTMLDivElement, CounterProps>(({ classNa
 
 	// events
 	React.useEffect(() => {
-		if (!counterRef.current) return
+		if (!triggerRef.current) return
 
 		const handleMouseDown = (e: MouseEvent) => {
 			dispatch(setIsMouseDown(true))
@@ -43,7 +40,7 @@ export const Counter = React.forwardRef<HTMLDivElement, CounterProps>(({ classNa
 		}
 		const handleMouseUp = () => {
 			dispatch(setIsMouseDown(false))
-			document.body.style.cursor = "default"
+			document.body.style.cursor = "auto"
 		}
 
 		const handleTouchStart = (e: TouchEvent) => {
@@ -74,43 +71,43 @@ export const Counter = React.forwardRef<HTMLDivElement, CounterProps>(({ classNa
 			calculateNewIndex(e.touches[0].clientY)
 		}
 
-		counterRef.current.addEventListener("mousedown", handleMouseDown)
-		counterRef.current.addEventListener("touchstart", handleTouchStart)
+		triggerRef.current.addEventListener("mousedown", handleMouseDown)
+		triggerRef.current.addEventListener("touchstart", handleTouchStart)
 		document.addEventListener("mouseup", handleMouseUp)
 		document.addEventListener("touchend", handleTouchEnd)
 		document.addEventListener("mousemove", handleMouseMove)
 		document.addEventListener("touchmove", handleTouchMove)
 
 		return () => {
-			counterRef.current?.removeEventListener("mousedown", handleMouseDown)
-			counterRef.current?.removeEventListener("touchstart", handleTouchStart)
+			triggerRef.current?.removeEventListener("mousedown", handleMouseDown)
+			triggerRef.current?.removeEventListener("touchstart", handleTouchStart)
 			document.removeEventListener("mouseup", handleMouseUp)
 			document.removeEventListener("touchend", handleTouchEnd)
 			document.removeEventListener("mousemove", handleMouseMove)
 			document.removeEventListener("touchmove", handleTouchMove)
 		}
-	}, [counterRef, sliderRef, sliderHeight, isMouseDown, isTouchStart, CONFIG.minValue, CONFIG.maxValue, CONFIG.step])
+	}, [triggerRef, sliderRef, sliderHeight, isMouseDown, isTouchStart, CONFIG.minValue, CONFIG.maxValue, CONFIG.step])
 
 	return (
 		<div
-			ref={(node) => {
-				counterRef.current = node
-				if (typeof ref === "function") ref(node)
-				else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node
-			}}
-			className={cn("flex min-h-screen justify-between px-6 py-10 select-none", className)}
+			ref={ref}
+			className={cn(
+				"relative isolate flex min-h-screen justify-between px-6 py-10",
+				(isMouseDown || isTouchStart) && "select-none",
+				className
+			)}
 			{...props}
 		>
+			{/* trigger */}
+			<div ref={triggerRef} className="absolute inset-0 z-[-1]" />
+
 			<Slider ref={sliderRef}>
 				<Dividers />
 				<SelectedRange />
 				<Handler ref={handlerRef} />
 			</Slider>
 
-			<Controls>
-				<Debug />
-				<Values />
-			</Controls>
+			<Controls />
 		</div>
 	)
 })
