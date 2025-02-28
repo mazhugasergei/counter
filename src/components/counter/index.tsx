@@ -92,7 +92,7 @@ export const Counter = React.forwardRef<HTMLDivElement, CounterProps>(({ classNa
 		<div
 			ref={ref}
 			className={cn(
-				"flex min-h-screen justify-between px-6 py-10",
+				"flex min-h-[100dvh] justify-between overflow-clip px-6 py-10",
 				(isMouseDown || isTouchStart) && "select-none",
 				className
 			)}
