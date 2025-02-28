@@ -8,7 +8,7 @@ interface ControlsProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export const Controls = React.forwardRef<HTMLDivElement, ControlsProps>(({ className, ...props }, ref) => (
 	<div ref={ref} className={cn("flex flex-col items-end gap-4", className)} {...props}>
-		<Settings />
+		<Settings className="z-50" />
 		<Debug />
 		<Values className="mt-auto text-right" />
 	</div>

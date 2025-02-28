@@ -92,14 +92,14 @@ export const Counter = React.forwardRef<HTMLDivElement, CounterProps>(({ classNa
 		<div
 			ref={ref}
 			className={cn(
-				"relative isolate flex min-h-screen justify-between px-6 py-10",
+				"flex min-h-screen justify-between px-6 py-10",
 				(isMouseDown || isTouchStart) && "select-none",
 				className
 			)}
 			{...props}
 		>
 			{/* trigger */}
-			<div ref={triggerRef} className="absolute inset-0 z-[-1]" />
+			<div ref={triggerRef} className="//bg-[#333] absolute inset-0 z-1" />
 
 			<Slider ref={sliderRef}>
 				<Dividers />
